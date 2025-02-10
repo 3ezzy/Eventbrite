@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription - FestiFrance</title>
+    <title>Inscription - FestiEvent</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50">
@@ -12,7 +12,7 @@
         <div class="max-w-md mx-auto">
             <div class="text-center mb-8">
                 <a href="/" class="text-2xl font-black tracking-tight inline-block">
-Festi<span class="text-orange-500">France</span>
+You<span class="text-orange-500">Event</span>
                 </a>
                 <h1 class="text-2xl font-bold mt-6 mb-2">Créez votre compte</h1>
                 <p class="text-gray-600">Rejoignez la communauté FestiFrance</p>
