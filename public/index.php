@@ -1,26 +1,23 @@
 <?php
-// index.php
 
-// Définir le chemin racine de l'application
 define('ROOT', dirname(__FILE__));
 
-// Activer l'affichage des erreurs en développement
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Récupérer l'URL demandée
+
 $url = isset($_GET['url']) ? $_GET['url'] : '';
 $url = rtrim($url, '/');
 $url = explode('/', $url);
 
-// Router basique
+
 $controller = !empty($url[0]) ? $url[0] : 'home';
 $action = isset($url[1]) ? $url[1] : 'index';
 $params = array_slice($url, 2);
 
-// Construire le nom de la classe du contrôleur
+
 $controllerClass = ucfirst($controller) . 'Controller';
-$controllerFile = ROOT . '/controllers/' . $controllerClass . '.php';
+$controllerFile = ROOT . '/../app/controllers/' . $controllerClass . '.php';
 
 try {
     if (file_exists($controllerFile)) {
@@ -35,8 +32,7 @@ try {
     } else {
         throw new Exception("Contrôleur '$controllerClass' non trouvé");
     }
-    echo "ffffffffffffff";
 } catch (Exception $e) {
 
-    echo 'Erreur : ' . $e->getMessage();
+    echo 'Err : ' . $e->getMessage();
 }
