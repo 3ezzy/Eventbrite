@@ -34,5 +34,6 @@ class Database {
 
     private function __clone() {}
 
-    private function __wakeup() {}
+    // Changé de private à public
+    public function __wakeup() {}
 }
