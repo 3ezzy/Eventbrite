@@ -1,11 +1,11 @@
 <?php
 
+require_once __DIR__ . '/../../core/Controller.php';
 
-class HomeController
+class HomeController extends Controller
 {
     public function index()
     {
-        echo "Page d'accueil";
+        $this->render('login.twig');
     }
-
 }

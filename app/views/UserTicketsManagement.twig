@@ -1,0 +1,72 @@
+{# views/profile/tickets.html.twig #}
+{% extends "layouts/profile.html.twig" %}
+
+{% block title %}Mes billets - YouEvent{% endblock %}
+
+{% block nav_tickets_class %}text-orange-500{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-12 px-4">
+    <h1 class="text-2xl font-bold mb-8">Mes billets</h1>
+
+    <div class="space-y-6">
+        {% for ticket in tickets %}
+            <div class="bg-white rounded-xl shadow p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">{{ ticket.event.name }}</h3>
+                        <div class="text-gray-600 space-y-1">
+                            <p>Date : {{ ticket.event.date|date('d F Y à H\\hi') }}</p>
+                            <p>Lieu : {{ ticket.event.location }}</p>
+                            <p>Numéro de billet : #{{ ticket.number }}</p>
+                        </div>
+                    </div>
+                    {% if ticket.cancellationRequested %}
+                        <span class="px-4 py-2 bg-yellow-50 text-yellow-600 rounded-lg">
+                            Annulation en attente
+                        </span>
+                    {% else %}
+                        <button class="px-4 py-2 text-red-500 hover:bg-red-50 rounded-lg transition"
+                                data-ticket-id="{{ ticket.id }}"
+                                onclick="requestCancellation(this)">
+                            Demander une annulation
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div class="text-center py-12 text-gray-500">
+                Vous n'avez pas encore de billets
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function requestCancellation(button) {
+    if (confirm("Êtes-vous sûr de vouloir demander l'annulation de ce billet ? Cette demande sera examinée par un administrateur.")) {
+        const ticketId = button.dataset.ticketId;
+        
+        fetch('{{ path('ticket_request_cancellation') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': '{{ csrf_token('ticket_cancellation') }}'
+            },
+            body: JSON.stringify({ ticketId: ticketId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                button.outerHTML = '<span class="px-4 py-2 bg-yellow-50 text-yellow-600 rounded-lg">Annulation en attente</span>';
+            } else {
+                alert('Une erreur est survenue. Veuillez réessayer.');
+            }
+        })
+        .catch(() => {
+            alert('Une erreur est survenue. Veuillez réessayer.');
+        });
+    }
+}
+</script>
+{% endblock %}
