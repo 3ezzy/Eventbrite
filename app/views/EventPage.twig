@@ -1,0 +1,128 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Event Management Dashboard{% endblock %}
+
+{% block content %}
+{# Add Remix Icons #}
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+{# Custom Animations #}
+<style>
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+</style>
+
+<div class="container mx-auto px-4 py-8">
+    {# Header Section #}
+    <header class="flex justify-between items-center mb-10">
+        <div>
+            <h1 class="text-4xl font-bold text-orange-600 flex items-center">
+                <i class="ri-calendar-event-line mr-3"></i>
+                Event Hub
+            </h1>
+            <p class="text-gray-600">
+                Welcome, {{ app.user.username }} | {{ "now"|date("Y-m-d H:i:s") }} UTC
+            </p>
+        </div>
+        
+        <div class="flex space-x-4">
+            <a href="{{ path('event_create') }}" class="bg-orange-500 text-white px-6 py-3 rounded-full hover:bg-orange-600 transition flex items-center shadow-lg hover:shadow-xl">
+                <i class="ri-add-line mr-2"></i> Create Event
+            </a>
+            
+            <div class="relative">
+                <input 
+                    type="text" 
+                    placeholder="Search events..." 
+                    class="pl-10 pr-4 py-3 rounded-full border-2 border-orange-200 focus:border-orange-500 transition"
+                >
+                <i class="ri-search-line absolute left-3 top-4 text-orange-500"></i>
+            </div>
+        </div>
+    </header>
+
+    {# Events Grid #}
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for event in events %}
+        <div class="bg-white rounded-2xl overflow-hidden shadow-lg transform transition hover:scale-105 hover:shadow-2xl">
+            {# Event Image #}
+            <div class="relative h-48 overflow-hidden">
+                <img 
+                    src="{{ event.coverImage }}" 
+                    alt="{{ event.title }}" 
+                    class="w-full h-full object-cover"
+                >
+                <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm">
+                    {{ event.category }}
+                </div>
+            </div>
+
+            {# Event Details #}
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-orange-600 mb-2">
+                    {{ event.title }}
+                </h2>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center text-gray-600">
+                        <i class="ri-map-pin-line mr-2 text-orange-500"></i>
+                        {{ event.location }}
+                    </div>
+                    <div class="text-orange-600 font-bold">
+                        {{ event.price|format_currency('USD') }}
+                    </div>
+                </div>
+
+                {# Ticket Progress #}
+                <div class="w-full bg-orange-100 rounded-full h-2.5 mb-2">
+                    <div 
+                        class="bg-orange-500 h-2.5 rounded-full" 
+                        style="width: {{ (event.ticketsSold / event.totalTickets) * 100 }}%"
+                    ></div>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">
+                    {{ event.ticketsSold }} / {{ event.totalTickets }} Tickets Sold
+                </p>
+
+                {# Action Buttons #}
+                <div class="flex space-x-4">
+                    <a href="{{ path('event_manage', {id: event.id}) }}" class="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition text-center">
+                        Manage Event
+                    </a>
+                    <a href="{{ path('event_details', {id: event.id}) }}" class="flex-1 border-2 border-orange-500 text-orange-500 py-3 rounded-full hover:bg-orange-500 hover:text-white transition text-center">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {# Quick Stats #}
+    <div class="mt-12 grid grid-cols-4 gap-6">
+        <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+            <i class="ri-calendar-check-line text-4xl text-orange-500 mb-4 block"></i>
+            <h3 class="text-2xl font-bold text-orange-600">{{ stats.totalEvents }}</h3>
+            <p class="text-gray-600">Total Events</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+            <i class="ri-ticket-line text-4xl text-orange-500 mb-4 block"></i>
+            <h3 class="text-2xl font-bold text-orange-600">{{ stats.ticketsSold|number_format }}</h3>
+            <p class="text-gray-600">Tickets Sold</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+            <i class="ri-money-dollar-circle-line text-4xl text-orange-500 mb-4 block"></i>
+            <h3 class="text-2xl font-bold text-orange-600">{{ stats.revenue|format_currency('USD', {fraction_digit: 0}) }}</h3>
+            <p class="text-gray-600">Revenue</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+            <i class="ri-user-line text-4xl text-orange-500 mb-4 block"></i>
+            <h3 class="text-2xl font-bold text-orange-600">{{ stats.attendees|number_format }}</h3>
+            <p class="text-gray-600">Attendees</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
