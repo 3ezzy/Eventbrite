@@ -1,12 +1,19 @@
 {
-  "name": "your-name/eventbrite",
-  "autoload": {
-    "psr-4": {
-      "App\\": "app/",
-      "Core\\": "core/"
+    "name": "khamm/eventbrite",
+    "autoload": {
+        "psr-4": {
+            "Khamm\\Eventbrite\\": "src/",
+            "App\\": "app/",
+            "Core\\": "core/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mehdi",
+            "email": "khammali26@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.19"
     }
-  },
-  "require": {
-    "twig/twig": "^3.0"
-  }
 }
