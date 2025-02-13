@@ -1,11 +1,18 @@
 <?php
 
-require_once __DIR__ . '/../../core/Controller.php';
+namespace App\Controllers;
+
+use Core\Controller;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $this->render('login.twig');
+        $this->render('home.twig');
+    }
+
+    public function error404()
+    {
+        echo 'Mostafa Not Found';
     }
 }
