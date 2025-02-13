@@ -1,39 +1,27 @@
 <?php
 
+namespace App\Database;
+
+use PDO;
 class Database {
-    private static ?Database $instance = null;
-    private PDO $pdo;
 
-    private function __construct() {
-        $configFile = __DIR__ . '/../config/database.php';
+    private $servername;
+    private $dbname;
+    private $username;
+    private $password;
 
-        if (!file_exists($configFile)) {
-            throw new Exception('Le fichier de configuration de la base de données est manquant.');
-        }
+    public function __construct()
+    {
+        require_once __DIR__ . '/../../env.php';
 
-        $config = require $configFile;
-
-        try {
-            $this->pdo = new PDO(
-                "pgsql:host={$config['host']};port={$config['port']};dbname={$config['dbname']}",
-                $config['user'],
-                $config['password'],
-                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-            );
-        } catch (PDOException $e) {
-            throw new Exception("Erreur de connexion : " . $e->getMessage());
-        }
+        $this->servername = $servername;
+        $this->dbname = $dbname;
+        $this->username = $username;
+        $this->password = $password;
     }
 
-    public static function getInstance(): PDO {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance->pdo;
+    public function connect() {
+        $conn = new PDO("pgsql:host=$this->servername;dbname=$this->dbname", $this->username, $this->password);
+        return $conn;
     }
-
-    private function __clone() {}
-
-    // Changé de private à public
-    public function __wakeup() {}
 }
