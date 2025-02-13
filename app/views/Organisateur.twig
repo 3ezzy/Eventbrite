@@ -1,0 +1,151 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Organizer Dashboard{% endblock %}
+
+{% block content %}
+{# Add Remix Icons #}
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+{# Custom Animations #}
+<style>
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    .animate-float {
+        animation: float 3s ease-in-out infinite;
+    }
+</style>
+
+<div class="container mx-auto px-4 py-8">
+    {# Header Section #}
+    <header class="flex flex-col md:flex-row justify-between items-center mb-10">
+        <div class="text-center md:text-left mb-6 md:mb-0">
+            <h1 class="text-4xl font-bold text-orange-600 flex items-center justify-center md:justify-start">
+                <i class="ri-user-star-line mr-3"></i>
+                Organizer Dashboard
+            </h1>
+            <p class="text-gray-600">Welcome, {{ '3ezzy' }} | {{ '2025-02-13 09:10:19' }} UTC</p>
+        </div>
+        
+        <div class="flex space-x-4">
+            <a href="{{ path('event_create') }}" class="bg-orange-500 text-white px-6 py-3 rounded-full hover:bg-orange-600 transition flex items-center shadow-lg hover:shadow-xl">
+                <i class="ri-add-line mr-2"></i> Create Event
+            </a>
+        </div>
+    </header>
+
+    {# Organizer Profile Section #}
+    <div class="bg-white rounded-2xl shadow-lg p-8 mb-10">
+        <div class="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6">
+            {# Profile Picture #}
+            <div class="w-32 h-32 rounded-full overflow-hidden shadow-lg animate-float">
+                <img src="{{ organizer.profileImage|default('https://via.placeholder.com/150') }}" alt="{{ organizer.name }}" class="w-full h-full object-cover">
+            </div>
+
+            {# Profile Details #}
+            <div class="text-center md:text-left">
+                <h2 class="text-3xl font-bold text-orange-600">{{ organizer.name|default('John Doe') }}</h2>
+                <p class="text-gray-600">{{ organizer.title|default('Professional Event Organizer') }}</p>
+                <div class="flex justify-center md:justify-start space-x-4 mt-4">
+                    {% if organizer.socialLinks.facebook %}
+                        <a href="{{ organizer.socialLinks.facebook }}" class="text-orange-500 hover:text-orange-600">
+                            <i class="ri-facebook-fill text-2xl"></i>
+                        </a>
+                    {% endif %}
+                    {% if organizer.socialLinks.twitter %}
+                        <a href="{{ organizer.socialLinks.twitter }}" class="text-orange-500 hover:text-orange-600">
+                            <i class="ri-twitter-fill text-2xl"></i>
+                        </a>
+                    {% endif %}
+                    {% if organizer.socialLinks.instagram %}
+                        <a href="{{ organizer.socialLinks.instagram }}" class="text-orange-500 hover:text-orange-600">
+                            <i class="ri-instagram-line text-2xl"></i>
+                        </a>
+                    {% endif %}
+                    {% if organizer.socialLinks.linkedin %}
+                        <a href="{{ organizer.socialLinks.linkedin }}" class="text-orange-500 hover:text-orange-600">
+                            <i class="ri-linkedin-fill text-2xl"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Upcoming Events Section #}
+    <div class="mb-10">
+        <h2 class="text-2xl font-bold text-orange-600 mb-6">Upcoming Events</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for event in upcomingEvents %}
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg transform transition hover:scale-105 hover:shadow-2xl">
+                {# Event Image #}
+                <div class="relative h-48 overflow-hidden">
+                    <img 
+                        src="{{ event.image|default('https://via.placeholder.com/400x200') }}" 
+                        alt="{{ event.title }}" 
+                        class="w-full h-full object-cover"
+                    >
+                    <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm">
+                        {{ event.category }}
+                    </div>
+                </div>
+
+                {# Event Details #}
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-orange-600 mb-2">{{ event.title }}</h2>
+                    
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center text-gray-600">
+                            <i class="ri-map-pin-line mr-2 text-orange-500"></i>
+                            {{ event.location }}
+                        </div>
+                        <div class="text-orange-600 font-bold">
+                            {{ event.price|format_currency('USD') }}
+                        </div>
+                    </div>
+
+                    {# Action Buttons #}
+                    <div class="flex space-x-4">
+                        <a href="{{ path('event_manage', {id: event.id}) }}" class="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition text-center">
+                            Manage Event
+                        </a>
+                        <a href="{{ path('event_details', {id: event.id}) }}" class="flex-1 border-2 border-orange-500 text-orange-500 py-3 rounded-full hover:bg-orange-500 hover:text-white transition text-center">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {# Statistics Section #}
+    <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h2 class="text-2xl font-bold text-orange-600 mb-6">Your Statistics</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-orange-50 p-6 rounded-2xl text-center">
+                <i class="ri-calendar-check-line text-4xl text-orange-500 mb-4 block"></i>
+                <h3 class="text-2xl font-bold text-orange-600">{{ stats.totalEvents|number_format }}</h3>
+                <p class="text-gray-600">Total Events</p>
+            </div>
+            <div class="bg-orange-50 p-6 rounded-2xl text-center">
+                <i class="ri-ticket-line text-4xl text-orange-500 mb-4 block"></i>
+                <h3 class="text-2xl font-bold text-orange-600">{{ stats.ticketsSold|number_format }}</h3>
+                <p class="text-gray-600">Tickets Sold</p>
+            </div>
+            <div class="bg-orange-50 p-6 rounded-2xl text-center">
+                <i class="ri-money-dollar-circle-line text-4xl text-orange-500 mb-4 block"></i>
+                <h3 class="text-2xl font-bold text-orange-600">{{ stats.revenue|format_currency('USD', {fraction_digit: 0}) }}</h3>
+                <p class="text-gray-600">Revenue</p>
+            </div>
+            <div class="bg-orange-50 p-6 rounded-2xl text-center">
+                <i class="ri-user-line text-4xl text-orange-500 mb-4 block"></i>
+                <h3 class="text-2xl font-bold text-orange-600">{{ stats.attendees|number_format }}</h3>
+                <p class="text-gray-600">Attendees</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
