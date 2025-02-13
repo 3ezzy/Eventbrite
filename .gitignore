@@ -1,6 +1,5 @@
 /vendor/
 .idea
 composer.lock
-/config/database.php
 composer.json
 env.php
