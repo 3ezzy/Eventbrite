@@ -1,8 +1,6 @@
 <?php
 // core/Controller.php
-
-require_once __DIR__ . '/../vendor/autoload.php';
-
+namespace Core;
 abstract class Controller {
     protected $twig;
 
