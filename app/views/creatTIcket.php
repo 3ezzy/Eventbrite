@@ -10,7 +10,7 @@
         
      
 
-        <form action="/tickets/create" method="POST" class="form">
+        <form action="createTicket" method="POST" class="form">
             <input type="hidden" name="event_id" value="<?= htmlspecialchars($event['event_id']) ?>">
             
             <div class="form-group">
