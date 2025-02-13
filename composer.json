@@ -1,8 +1,8 @@
 {
-    "name": "morha/eventbrite",
+    "name": "khamm/eventbrite",
     "autoload": {
         "psr-4": {
-            "Morha\\Eventbrite\\": "src/",
+            "Khamm\\Eventbrite\\": "src/",
             "Core\\": "core/",
             "App\\Controllers\\": "app/controllers/",
             "App\\Middleware\\": "app/middleware/",
@@ -12,11 +12,9 @@
     },
     "authors": [
         {
-            "name": "Mostafa Rhazlani",
-            "email": "mo.rhazlani@gmail.com"
+            "name": "Mehdi",
+            "email": "khammali26@gmail.com"
         }
     ],
-    "require": {
-        "twig/twig": "^3.20"
-    }
+    "require": {}
 }
