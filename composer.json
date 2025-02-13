@@ -1,19 +1,22 @@
 {
-    "name": "khamm/eventbrite",
+    "name": "morha/eventbrite",
     "autoload": {
         "psr-4": {
-            "Khamm\\Eventbrite\\": "src/",
-            "App\\": "app/",
-            "Core\\": "core/"
+            "Morha\\Eventbrite\\": "src/",
+            "Core\\": "core/",
+            "App\\Controllers\\": "app/controllers/",
+            "App\\Middleware\\": "app/middleware/",
+            "App\\Models\\": "app/models/",
+            "App\\Database\\": "app/Database/"
         }
     },
     "authors": [
         {
-            "name": "Mehdi",
-            "email": "khammali26@gmail.com"
+            "name": "Mostafa Rhazlani",
+            "email": "mo.rhazlani@gmail.com"
         }
     ],
     "require": {
-        "twig/twig": "^3.19"
+        "twig/twig": "^3.20"
     }
 }

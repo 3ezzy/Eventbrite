@@ -1,14 +1,18 @@
 <?php
 
+namespace App\Controllers;
+
+use Core\Controller;
+
 class AuthController extends Controller
 {
     public function login()
     {
-        return $this->render('auth/login.html.twig');
+        return $this->render('login.twig');
     }
 
     public function register()
     {
-        return $this->render('auth/register.html.twig');
+        return $this->render('register.twig');
     }
 }

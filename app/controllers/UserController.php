@@ -1,13 +1,27 @@
 <?php
-class UserController
+
+namespace App\Controllers;
+
+use Core\Controller;
+use App\Models\User;
+
+class UserController extends Controller
 {
-    public function login()
+    private $userModel;
+
+    public function __construct()
     {
-        echo "Page login";
+        parent::__construct();
+        $this->userModel = new User;
+    }
+    public function index()
+    {
+        $data = $this->userModel->index();
+        return $this->render('EventPage.twig', ['data' => $data]);
     }
 
     public function register()
     {
-        echo "Page register";
+        echo $this->userModel->index();
     }
 }
