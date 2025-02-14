@@ -14,14 +14,26 @@ class UserController extends Controller
         parent::__construct();
         $this->userModel = new User;
     }
-    public function index()
+
+    public function login_page()
     {
-        $data = $this->userModel->index();
-        return $this->render('EventPage.twig', ['data' => $data]);
+        return $this->render('login.twig');
+    }
+
+
+    public function register_page()
+    {
+        return $this->render('register.twig');
     }
 
     public function register()
     {
-        echo $this->userModel->index();
+        $this->userModel->setName($_POST['name']);
+        $this->userModel->setEmail($_POST['email']);
+        $this->userModel->setPassword($_POST['password']);
+        $this->userModel->setRole($_POST['role']);
+        if($this->userModel->createUser()) {
+            header('location: login');
+        }
     }
 }
