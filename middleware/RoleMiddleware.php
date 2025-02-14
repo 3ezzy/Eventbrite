@@ -2,16 +2,15 @@
 
 class RoleMiddleware {
     public static function admin() {
-        self::checkRole(['admin']);
+        self::checkRole(['Admin']);
     }
 
-    public static function editor() {
-        self::checkRole(['editor']);
+    public static function organizer() {
+        self::checkRole(['Organizer']);
     }
 
     private static function checkRole($allowedRoles) {
-        session_start();
-        if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $allowedRoles)) {
+        if (!isset($_SESSION['user']['role']) || !in_array($_SESSION['user']['role'], $allowedRoles)) {
             header("Location: error?error=unauthorized");
             exit();
         }
