@@ -1,32 +1,44 @@
 <?php
 // core/Controller.php
 namespace Core;
+
+use Exception;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Twig\Extension\DebugExtension;
+use Twig\TwigFunction;
+
 abstract class Controller {
     protected $twig;
 
     public function __construct() {
-        // Définir les chemins absolus
+        // Define absolute paths
         $viewsPath = [
             __DIR__ . '/../app/views',
-            __DIR__ . '/../app/views/layouts'  // Ajout explicite du dossier layouts
+            __DIR__ . '/../app/views/layouts'
         ];
 
-        // Vérifier que les chemins existent
+        // Ensure paths exist
         foreach ($viewsPath as $path) {
             if (!is_dir($path)) {
                 throw new Exception('Dossier introuvable : ' . $path);
             }
         }
 
-        $loader = new \Twig\Loader\FilesystemLoader($viewsPath);
-
-        $this->twig = new \Twig\Environment($loader, [
+        $loader = new FilesystemLoader($viewsPath);
+        $this->twig = new Environment($loader, [
             'cache' => false,
-            'debug' => true
+            'debug' => true // Enable debugging
         ]);
 
-        $this->twig->addFunction(new \Twig\TwigFunction('path', function($route) {
-            return '/Eventbrite/public/index.php/' . $route;
+        // Add Debug Extension
+        $this->twig->addExtension(new DebugExtension());
+        
+        $this->twig->addGlobal('session', $_SESSION);
+
+        // Add custom path function
+        $this->twig->addFunction(new TwigFunction('path', function($route) {
+            return '/Eventbrite/' . $route;
         }));
     }
 
