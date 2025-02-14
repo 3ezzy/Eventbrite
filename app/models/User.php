@@ -1,6 +1,8 @@
 <?php 
 
 namespace App\Models;
+
+use PDO;
 use App\Database\Database;
 class  User{
     private $avatar;
@@ -51,7 +53,7 @@ class  User{
     }
 
     public function setPassword($password) {
-        $this->password = password_hash($password, PASSWORD_BCRYPT);
+        $this->password = $password;
     }
 
     public function getRole() {
@@ -85,5 +87,17 @@ class  User{
             $stmt->bindValue(6, $this->user_status);
             return $stmt->execute();
     }
+
+    public function findUser() {
+
+        // Prepare SQL statement
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $this->conn->prepare($sql);
+
+        // Bind parameters
+        $stmt->bindValue(1, $this->email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
 }
