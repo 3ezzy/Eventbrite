@@ -1,5 +1,6 @@
 <?php
 
+namespace Middleware;
 class RoleMiddleware {
     public static function admin() {
         self::checkRole(['Admin']);
@@ -7,6 +8,10 @@ class RoleMiddleware {
 
     public static function organizer() {
         self::checkRole(['Organizer']);
+    }
+
+    public static function participant() {
+        self::checkRole(['Participant']);
     }
 
     private static function checkRole($allowedRoles) {
