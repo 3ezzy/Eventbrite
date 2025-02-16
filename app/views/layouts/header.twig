@@ -16,10 +16,23 @@
                         <span class="text-xl font-black">You<span class="text-orange-500">Event</span></span>
                     </a>
                 </div>
+                <ul class="flex items-center gap-4">
+                    <li>
+                        <a href="{{ path('home') }}" class="flex items-center">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('events') }}" class="flex items-center">
+                            Events
+                        </a>
+                    </li>
+
+                </ul>
                 <div class="flex items-center gap-4">
-                    <a href="{{ path('profile_tickets') }}" class="text-gray-600 hover:text-gray-900">Mes billets</a>
-                    <a href="{{ path('profile_settings') }}" class="{% block nav_settings_class %}text-gray-600 hover:text-gray-900{% endblock %}">Paramètres</a>
-                    <a href="{{ path('logout') }}" class="text-gray-600 hover:text-gray-900">Déconnexion</a>
+                    <a href="{{ path('profile_tickets') }}" class="text-gray-600 hover:text-gray-900">My Tickets</a>
+                    <a href="{{ path('profile_settings') }}" class="{% block nav_settings_class %}text-gray-600 hover:text-gray-900{% endblock %}">Profile</a>
+                    <a href="{{ path('logout') }}" class="text-gray-600 hover:text-gray-900">Logout</a>
                 </div>
             </div>
         </div>

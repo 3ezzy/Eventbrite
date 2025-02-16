@@ -1,7 +1,6 @@
 <?php
 
 namespace Core;
-
 class Router {
     private $routes = [];
 
@@ -38,11 +37,11 @@ class Router {
                     if (strpos($middleware, '::') !== false) {
                         // Handle static method middleware like RoleMiddleware::admin
                         [$class, $method] = explode('::', $middleware);
-                        require_once __DIR__ . "/../middleware/$class.php";
+                        $class = "Middleware\\$class";
                         call_user_func([$class, $method]); // Call static method
                     } else {
                         // Handle normal middleware like AuthMiddleware
-                        require_once __DIR__ . "/../middleware/$middleware.php";
+                        $middleware = "Middleware\\$middleware";
                         $middlewareInstance = new $middleware();
                         $middlewareInstance->handle();
                     }
