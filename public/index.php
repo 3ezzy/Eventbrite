@@ -15,8 +15,10 @@ $router->add('create_user', 'UserController', 'register');
 $router->add('find_user', 'UserController', 'login');
 $router->add('logout', 'UserController', 'logout');
 
-$router->add('events', 'EventController', 'getAllEvents', ['AuthMiddleware']);
+$router->add('events', 'EventController', 'getAllEvents', ['AuthMiddleware', 'RoleMiddleware::participant']);
 $router->add('event/details/{event_id}', 'EventController', 'eventDetails', ['AuthMiddleware']);
+
+$router->add('reservation/{event_id}/{ticket_id}', 'ReserveController', 'reserve', ['AuthMiddleware']);
 
 $router->add('admin/dashboard', 'AdminController', 'index', ['AuthMiddleware', 'RoleMiddleware::admin']);
 $router->add('organizer/dashboard', 'OrganizerController', 'index', ['AuthMiddleware', 'RoleMiddleware::organizer']);

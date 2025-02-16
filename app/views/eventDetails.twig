@@ -37,27 +37,33 @@
 
             <!-- Ticket Options -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div class="border-2 border-gray-300 rounded-lg p-6 text-center">
-                    <h3 class="text-xl font-bold mb-2 text-green-500">Free Ticket</h3>
-                    <p class="text-gray-600">Access to standard event features.</p>
-                    <button class="mt-4 bg-green-500 text-white py-2 px-6 rounded-full hover:bg-green-600 transition">
-                        Get Free Ticket
-                    </button>
-                </div>
-                <div class="border-2 border-orange-500 rounded-lg p-6 text-center">
-                    <h3 class="text-xl font-bold mb-2 text-orange-500">VIP Ticket</h3>
-                    <p class="text-gray-600">Exclusive access & premium seating.</p>
-                    <button class="mt-4 bg-orange-500 text-white py-2 px-6 rounded-full hover:bg-orange-600 transition">
-                        Buy VIP Ticket
-                    </button>
-                </div>
-                <div class="border-2 border-blue-500 rounded-lg p-6 text-center">
-                    <h3 class="text-xl font-bold mb-2 text-blue-500">Early Bird Ticket</h3>
-                    <p class="text-gray-600">Discounted ticket for early buyers.</p>
-                    <button class="mt-4 bg-blue-500 text-white py-2 px-6 rounded-full hover:bg-blue-600 transition">
-                        Buy Early Bird Ticket
-                    </button>
-                </div>
+                
+                {% for ticket in tickets %}
+                    <div class="flex flex-col justify-between border-2 {% if ticket.capacity == 0 %}border-gray-500{% elseif ticket.ticket_status == 'Free' %}border-green-500{% elseif ticket.ticket_status == 'VIP' %} border-orange-500 {% else %}border-blue-500{% endif %} rounded-lg p-6 text-center">
+                        <h3 class="text-xl font-bold mb-2 {% if ticket.capacity == 0 %}text-gray-500{% elseif ticket.ticket_status == 'Free' %}text-green-500 {% elseif ticket.ticket_status == 'VIP' %} text-orange-500{% else %}text-blue-500{% endif %}">
+                            {% if ticket.capacity == 0 %}
+                                Sold Out
+                            {% else %}
+                                {{ ticket.capacity }} {{ ticket.ticket_status }} Ticket
+                            {% endif %}
+                        </h3>
+                        
+                        {% if ticket.capacity == 0 %}
+                            <p class="text-red-500 mt-4 font-semibold">This ticket is sold out.</p>
+                        {% else %}
+                            <p class="text-gray-600">{{ ticket.description }}</p>
+                            <p class="text-lg font-semibold mt-2 {% if ticket.ticket_status == 'Free' %}text-green-500 {% elseif ticket.ticket_status == 'VIP' %} text-orange-500{% else %}text-blue-500{% endif %}">
+                                ${{ ticket.price }}
+                            </p>
+                            <form action="{{ path('reservation/') }}{{ event.event_id }}/{{ ticket.ticket_id }}" method="POST">
+                                <button class="mt-4 {% if ticket.ticket_status == 'Free' %}bg-green-500 {% elseif ticket.ticket_status == 'VIP' %} bg-orange-500 {% else %}bg-blue-500{% endif %} text-white py-2 px-6 rounded-full {% if ticket.ticket_status == 'Free' %} hover:bg-green-600 {% elseif ticket.ticket_status == 'VIP' %}  hover:bg-orange-600 {% else %} hover:bg-blue-600{% endif %} transition">
+                                    Get {{ ticket.ticket_status }} Ticket
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
             </div>
         </div>
     </div>
