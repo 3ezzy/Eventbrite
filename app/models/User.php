@@ -5,13 +5,13 @@ namespace App\Models;
 use PDO;
 use App\Database\Database;
 class  User{
-    private $avatar;
-    private $name;
-    private $email;
-    private $password;
-    private $role;
-    private $user_status;
-    private $conn; 
+    protected $avatar;
+    protected $name;
+    protected $email;
+    protected $password;
+    protected $role;
+    protected $user_status;
+    protected $conn; 
 
     public function __construct($name = "", $email = "", $password = "", $role = "", $avatar = "", $user_status = 'active') {
         $this->name = $name;
@@ -70,22 +70,6 @@ class  User{
 
     public function setUserStatus($user_status) {
         $this->user_status = $user_status;
-    }
-
-    public function createUser() {
-
-            // Prepare SQL statement
-            $sql = "INSERT INTO users (avatar, name, email, password, role, user_status) VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt = $this->conn->prepare($sql);
-
-            // Bind parameters
-            $stmt->bindValue(1, $this->avatar);
-            $stmt->bindValue(2, $this->name);
-            $stmt->bindValue(3, $this->email);
-            $stmt->bindValue(4, $this->password);
-            $stmt->bindValue(5, $this->role);
-            $stmt->bindValue(6, $this->user_status);
-            return $stmt->execute();
     }
 
     public function findUser() {

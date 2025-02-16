@@ -2,16 +2,23 @@
 namespace App\Controllers;
 
 use Core\Controller;
+use App\Models\Organizer;
+use App\Models\Participant;
 use App\Models\User;
 
 class UserController extends Controller
 {
+    private $organizerModel;
+    private $participantModel;
     private $userModel;
 
     public function __construct()
     {
         parent::__construct();
-        $this->userModel = new User;
+        $this->organizerModel = new Organizer();
+        $this->participantModel = new Participant();
+        $this->userModel = new User();
+
     }
 
     public function login_page()
@@ -27,14 +34,21 @@ class UserController extends Controller
 
     public function register()
     {
-        $this->userModel->setName($_POST['name']);
-        $this->userModel->setEmail($_POST['email']);
         $password_hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
-        $this->userModel->setPassword($password_hash);
-        $this->userModel->setRole($_POST['role']);
-        if($this->userModel->createUser()) {
-            header('location: login');
+        if($_POST['role'] === 'Organizer') {
+            $this->organizerModel->setName($_POST['name']);
+            $this->organizerModel->setEmail($_POST['email']);
+            $this->organizerModel->setPassword($password_hash);
+            $this->organizerModel->setRole($_POST['role']);
+            $this->organizerModel->createUser();
+        } else {
+            $this->participantModel->setName($_POST['name']);
+            $this->participantModel->setEmail($_POST['email']);
+            $this->participantModel->setPassword($password_hash);
+            $this->participantModel->setRole($_POST['role']);
+            $this->participantModel->createUser();
         }
+        header('location: login');
     }
 
     public function login()
@@ -67,8 +81,6 @@ class UserController extends Controller
         if(isset($_SESSION['user'])) {
             unset($_SESSION['user']);
             header('location: login');
-        } else {
-            echo "not found";
         }
     }   
 }
