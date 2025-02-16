@@ -1,0 +1,65 @@
+{# views/profile/tickets.html.twig #}
+{% extends "layouts/header.twig" %}
+
+{% block title %}Event Details - YouEvent{% endblock %}
+
+{% block content %}
+<div class="w-5/6 mx-auto py-12 px-4">
+    <h1 class="text-2xl font-bold mb-8">Event Details</h1>
+
+    <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
+        <!-- Event Image -->
+        <div class="relative h-96 overflow-hidden">
+            <img 
+                src="{{ event.event_image }}" 
+                alt="Event" 
+                class="w-full h-full object-cover"
+            >
+            <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm">
+                {{ event.namecategory }}
+            </div>
+        </div>
+
+        <!-- Event Details -->
+        <div class="p-6">
+            <h2 class="text-3xl font-bold text-orange-600 mb-2">{{ event.title }}</h2>
+            <p class="text-gray-700 mb-4">{{ event.description }}</p>
+            
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center text-gray-600">
+                    <i class="ri-map-pin-line mr-2 text-orange-500"></i>
+                    {{ event.location }}
+                </div>
+                <div class="text-orange-600 font-bold">
+                    {{ event.date }}
+                </div>
+            </div>
+
+            <!-- Ticket Options -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="border-2 border-gray-300 rounded-lg p-6 text-center">
+                    <h3 class="text-xl font-bold mb-2 text-green-500">Free Ticket</h3>
+                    <p class="text-gray-600">Access to standard event features.</p>
+                    <button class="mt-4 bg-green-500 text-white py-2 px-6 rounded-full hover:bg-green-600 transition">
+                        Get Free Ticket
+                    </button>
+                </div>
+                <div class="border-2 border-orange-500 rounded-lg p-6 text-center">
+                    <h3 class="text-xl font-bold mb-2 text-orange-500">VIP Ticket</h3>
+                    <p class="text-gray-600">Exclusive access & premium seating.</p>
+                    <button class="mt-4 bg-orange-500 text-white py-2 px-6 rounded-full hover:bg-orange-600 transition">
+                        Buy VIP Ticket
+                    </button>
+                </div>
+                <div class="border-2 border-blue-500 rounded-lg p-6 text-center">
+                    <h3 class="text-xl font-bold mb-2 text-blue-500">Early Bird Ticket</h3>
+                    <p class="text-gray-600">Discounted ticket for early buyers.</p>
+                    <button class="mt-4 bg-blue-500 text-white py-2 px-6 rounded-full hover:bg-blue-600 transition">
+                        Buy Early Bird Ticket
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

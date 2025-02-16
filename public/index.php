@@ -16,6 +16,7 @@ $router->add('find_user', 'UserController', 'login');
 $router->add('logout', 'UserController', 'logout');
 
 $router->add('events', 'EventController', 'getAllEvents', ['AuthMiddleware']);
+$router->add('event/details/{event_id}', 'EventController', 'eventDetails', ['AuthMiddleware']);
 
 $router->add('admin/dashboard', 'AdminController', 'index', ['AuthMiddleware', 'RoleMiddleware::admin']);
 $router->add('organizer/dashboard', 'OrganizerController', 'index', ['AuthMiddleware', 'RoleMiddleware::organizer']);
