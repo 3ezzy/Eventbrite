@@ -11,13 +11,13 @@ class Database {
     private $password;
 
     public function __construct()
-    {
-        require_once __DIR__ . '/../../env.php';
+{
+        $config = require __DIR__ . '/../../env.php';
 
-        $this->servername = $servername;
-        $this->dbname = $dbname;
-        $this->username = $username;
-        $this->password = $password;
+        $this->servername = $config['servername'];
+        $this->dbname = $config['dbname'];
+        $this->username = $config['username'];
+        $this->password = $config['password'];
     }
 
     public function connect() {
