@@ -1,0 +1,50 @@
+{% extends "layouts/header.twig" %}
+
+{% block title %}YouEvent - La plateforme des passionnés d'événements{% endblock %}
+
+{% block content %}
+
+    <div class="min-h-screen">
+        <main>
+            <section class="relative h-screen flex items-center">
+                <div class="absolute inset-0 overflow-hidden">
+                    <img class="w-full h-full object-cover" src="https://blog.inevent.com/wp-content/uploads/2024/01/How-to-Become-a-Successful-Event-Manager-in-2024.webp">
+                    <div class="absolute inset-0 bg-black/40"></div>
+                </div>
+
+                <div class="relative max-w-screen-xl mx-auto px-6">
+                    <div class="max-w-2xl">
+                        <h1 class="text-5xl font-bold text-white mb-6 leading-tight">
+                            Vivez des moments uniques partout en France
+                        </h1>
+                        <p class="text-lg text-white/90 mb-8">
+                            Festivals, concerts, expos, sport... Trouvez les meilleurs événements près de chez vous
+                        </p>
+
+                        <div class="bg-white p-4 rounded-xl shadow-xl flex gap-4">
+                            <div class="flex-1">
+                                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
+                                    Rechercher un événement
+                                </label>
+                                <input type="text"
+                                       id="search"
+                                       class="w-full focus:ring-2 focus:ring-orange-500 focus:outline-none rounded-lg border-gray-200"
+                                       placeholder="Festival, concert, exposition...">
+                            </div>
+                            <div>
+                                <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Où ?</label>
+                                <input type="text"
+                                       id="location"
+                                       class="w-full focus:ring-2 focus:ring-orange-500 focus:outline-none rounded-lg border-gray-200"
+                                       placeholder="Ville ou code postal">
+                            </div>
+                            <button class="px-8 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition">
+                                Rechercher
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+{% endblock %}
