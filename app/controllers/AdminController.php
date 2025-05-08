@@ -7,7 +7,7 @@ use Core\Controller;
 class AdminController extends Controller
 {
 
-    public function __construct()
+    public function __construct()ebjbjkq
     {
         parent::__construct();
     }
